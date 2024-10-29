@@ -1,0 +1,7 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./file-server/Dockerfile
+    ports:
+      - "8800:8000"
