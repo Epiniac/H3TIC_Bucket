@@ -1,16 +1,22 @@
+name: "Bucket"
 services:
     db:
+        platform: linux/amd64
         image: mysql:9.1.0
         healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
             interval: 5s
             timeout: 5s
             retries: 5
             start_period: 5s
         environment:
-            MYSQL_ROOT_PASWOR: "user"
-            MYSQL_ROOT_PASWORD: "root"
+            MYSQL_ROOT_PASSWORD: "root"
+            MYSQL_USER: "user"
+            MYSQL_PASSWORD: "password"
+            MYSQL_DATABASE: "Bucket"
         volumes:
             - ./data:/var/lib/mysql
+
     backend:
         build:
             context: .
@@ -19,4 +25,4 @@ services:
             - "8800:8000"
         depends_on:
             db:
-                conditions: service_healthy
+                condition: service_healthy
