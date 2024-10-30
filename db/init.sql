@@ -1,4 +1,3 @@
-CREATE DATABASE IF NOT EXISTS file_db;
 USE file_db;
 
 CREATE TABLE IF NOT EXISTS users (
