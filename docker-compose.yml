@@ -2,7 +2,7 @@ name: "Bucket"
 services:
     db:
         platform: linux/amd64
-        image: mariadb:latest
+        image: mariadb:11
         healthcheck:
             test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
             interval: 5s
