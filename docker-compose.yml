@@ -1,4 +1,4 @@
-name: "Bucket"
+name: "bucket"
 services:
   db:
     platform: linux/amd64
