@@ -11,9 +11,8 @@ const port = process.env.PORT || 5000;
 const uploadDir = path.join("src", "uploads");
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
-    console.log("Dossier 'uploads' créé dans 'src/'.");
 } else {
-    console.log("Dossier 'uploads' déjà présent.");
+    console.log("folder upload is here already !");
 }
 
 app.use(express.json());

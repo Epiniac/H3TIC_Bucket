@@ -10,3 +10,5 @@ clean:
 	sudo rm -rf data
 mariadb:
 	docker exec -it bucket-db-1 mariadb -u root -p
+bash:
+	docker exec -it bucket-backend-1 /bin/bash

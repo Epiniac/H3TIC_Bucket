@@ -1,6 +1,10 @@
 import express from "express";
 import multer from "multer";
-import { uploadFile } from "../controllers/fileController.js";
+import {
+    uploadFile,
+    generateShareLink,
+    downloadFile
+} from "../controllers/fileController.js";
 import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -14,7 +18,6 @@ const upload = multer({
     storage,
     limits: { fileSize: 2 * 1024 * 1024 * 1024 },
     fileFilter: (req, file, cb) => {
-        console.log("Nom du champ reçu par Multer:", file.fieldname);
         if (file.fieldname === "file") {
             cb(null, true);
         } else {
@@ -24,5 +27,7 @@ const upload = multer({
 });
 
 router.post("/upload", auth, upload.single("file"), uploadFile);
+router.post("/share/:fileId", auth, generateShareLink);
+router.get("/download/:token", downloadFile);
 
 export default router;
