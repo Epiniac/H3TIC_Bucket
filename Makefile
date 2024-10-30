@@ -7,3 +7,5 @@ stop:
 clean:
 	docker compose down -v
 	rm -rf pgdata
+db: 
+	docker exec -it bucket-db-1 mariadb -u root -p
