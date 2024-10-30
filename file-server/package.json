@@ -1,17 +1,13 @@
 {
-  "name": "file-server",
-  "version": "1.0.0",
-  "main": "app.js",
-  "start": "nodemon",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.21.1",
-    "route": "^0.2.5"
-  }
+    "name": "your-project-name",
+    "version": "1.0.0",
+    "main": "app.js",
+    "type": "module",
+    "scripts": {
+        "start": "nodemon"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "mysql": "^2.18.1"
+    }
 }
