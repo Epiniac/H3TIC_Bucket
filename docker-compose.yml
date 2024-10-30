@@ -13,7 +13,7 @@ services:
             MYSQL_ROOT_PASSWORD: "root"
             MYSQL_USER: "user"
             MYSQL_PASSWORD: "password"
-            MYSQL_DATABASE: "Bucket"
+            MYSQL_DATABASE: "file_db"
         volumes:
             - ./data:/var/lib/mysql
             - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -23,7 +23,7 @@ services:
             context: .
             dockerfile: ./file-server/Dockerfile
         ports:
-            - "8800:8000"
+            - "8800:5000"
         depends_on:
             db:
                 condition: service_healthy

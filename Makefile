@@ -1,11 +1,11 @@
 build:
 	docker compose up --build
-start:
-	docker compose up -d
+re:
+	docker compose up
 stop:
 	docker compose down
 clean:
 	docker compose down -v
 	rm -rf pgdata
-db: 
+mariadb:
 	docker exec -it bucket-db-1 mariadb -u root -p
