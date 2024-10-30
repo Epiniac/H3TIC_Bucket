@@ -3,7 +3,7 @@ import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 
-const envPath = path.resolve(".envfff");
+const envPath = path.resolve(".env");
 let jwtSecret = process.env.JWT_SECRET;
 
 if (!jwtSecret) {

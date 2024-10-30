@@ -1,29 +1,36 @@
 name: "Bucket"
 services:
-    db:
-        platform: linux/amd64
-        image: mariadb:11
-        healthcheck:
-            test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
-            interval: 5s
-            timeout: 5s
-            retries: 5
-            start_period: 5s
-        environment:
-            MYSQL_ROOT_PASSWORD: "root"
-            MYSQL_USER: "user"
-            MYSQL_PASSWORD: "password"
-            MYSQL_DATABASE: "file_db"
-        volumes:
-            - ./data:/var/lib/mysql
-            - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  db:
+    platform: linux/amd64
+    image: mariadb:11
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "healthcheck.sh",
+          "--su-mysql",
+          "--connect",
+          "--innodb_initialized",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD_ROOT}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-    backend:
-        build:
-            context: .
-            dockerfile: ./file-server/Dockerfile
-        ports:
-            - "8800:5000"
-        depends_on:
-            db:
-                condition: service_healthy
+  backend:
+    build:
+      context: .
+      dockerfile: ./file-server/Dockerfile
+    ports:
+      - "8800:5000"
+    depends_on:
+      db:
+        condition: service_healthy
