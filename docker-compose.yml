@@ -35,5 +35,7 @@ services:
         depends_on:
             db:
                 condition: service_healthy
+        volumes:
+            - ./src/uploads:/app/src/uploads
         env_file:
             - .env
