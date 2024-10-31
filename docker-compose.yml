@@ -44,7 +44,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "6600:3000"
+      - "6600:9000"
     volumes:
       - /usr/src/app/node_modules
       - ./frontend:/usr/src/app
