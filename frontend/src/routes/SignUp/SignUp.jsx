@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -14,6 +15,10 @@ function Register() {
     e.preventDefault();
     if (!username || !password) {
       setMessage("Both fields are required");
+      return;
+    }
+    if (password !=  repassword) {
+      setMessage("Passwords do not match");
       return;
     }
     setIsLoading(true);
@@ -32,30 +37,40 @@ function Register() {
   };
 
   return (
-    <div className="header">
+    <div  className="theme">
       <div>
-        <h2 className="signtitle">REGISTER</h2>
-        <form className="article" onSubmit={handleSubmit}>
+        <h2>REGISTER</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="input">
           <label>Username:</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-          />
+          /></div>
+          <div className="input">
           <label>Password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-          />
-          <button type="submit" disabled={isLoading}>
+          /></div>
+          <div className="input">
+          <label>Repeat Password:</label>
+          <input
+            type="password"
+            value={repassword}
+            onChange={(e) => setRepassword(e.target.value)}
+            required
+          /></div>
+          <button className="button" type="submit" disabled={isLoading}>
             {isLoading ? "Registering..." : "Register"}
           </button>
           <p>Already have an account? Log-in <a href="/login">here</a></p>
         </form>
-        {message && <p>{message}</p>}
+        {message && <p className="message">{message}</p>}
       </div>
     </div>
   );

@@ -1,23 +1,22 @@
-.article {
-    height: 40%;
+.theme {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
     flex-direction: column;
-    margin: 15% 40%;  
-    background-color: rgb(255, 255, 255); 
-    border-radius: 10px;
-    padding: 20px 0;
-    opacity: 0.8;
-}
-
-label {
-    font-size: larger;
-}
-
-.signtitle{
+    align-items: center;
     text-align: center;
-    font-size: 70px;
-    color: white;
+    margin: 10% 30%;
+    border-radius: 10px;
+    border : solid;   
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
 }
+
+.input {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 8%;
+}
+
+.message {
+    color: red;
+}
+
