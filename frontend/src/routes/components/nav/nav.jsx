@@ -5,14 +5,16 @@ export const Navbar = () => {
   return (
     <div>
       <div id="main-navbar" className="navbar">
-        <h2 className="title">HETIC</h2>
+        <a className="title" href="/">
+          <h3>H3TIC BUCKET</h3>
+        </a>
         <nav className="navigation">
           <ul>
             <li>
-              <a href="/home">Sign In</a>
+              <a className="button" href="/connexion">SIGN IN</a>
             </li>
             <li>
-              <a href="/home">Sign Up</a>
+              <a className="button" href="/register">SIGN UP</a>
             </li>
           </ul>
         </nav>

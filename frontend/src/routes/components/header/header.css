@@ -3,7 +3,7 @@
       no-repeat center center/cover;
     height: 100vh;
     position: relative;
-    color: white;
+    color: rgb(39, 39, 39);
   }
   
   .header::before {
@@ -19,3 +19,28 @@
     z-index: 10;
   }
   
+
+.main {
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-direction: column;
+  margin: 10px 10%;
+}
+
+.title {
+    font-size: 50px;
+    color: white;
+}
+
+.text {
+    font-size: x-large;
+    text-align: center;
+}
+
+.button {
+    color : white;
+    font-size: 16px;
+}
