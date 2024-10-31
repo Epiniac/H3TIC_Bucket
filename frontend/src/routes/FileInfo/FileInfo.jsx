@@ -18,14 +18,18 @@ const FileInfo = () => {
                 "/files/upload",
                 formData,
                 {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
+                    headers: { "Content-Type": "multipart/form-data" },
                 }
             );
 
+            if (!response.data.fileId) {
+                console.error("No fileId received from backend");
+                setMessage("Upload successful, but fileId missing.");
+                return;
+            }
+
             const uploadedFile = {
-                id: response.data.fileId,
+                id: response.data.fileId, // Assurez-vous que fileId est présent ici
                 fileName: file.name,
                 fileSize: (file.size / 1024).toFixed(2) + " KB",
             };
@@ -41,16 +45,33 @@ const FileInfo = () => {
     const handleFileChange = (e) => {
         const newFile = e.target.files[0];
         if (newFile) {
-            // Appel à la fonction d'upload du fichier
             uploadFile(newFile);
         }
     };
 
-    // Suppression d'un fichier localement
-    const handleDeleteFile = (fileName) => {
-        setFiles((prevFiles) =>
-            prevFiles.filter((file) => file.fileName !== fileName)
-        );
+    const handleDeleteFile = async (fileId) => {
+        if (!fileId) {
+            console.error("No fileId provided for deletion");
+            setMessage("Failed to delete file: missing fileId");
+            return;
+        }
+
+        console.log("Attempting to delete file with ID:", fileId);
+
+        try {
+            const response = await axiosInstance.delete(
+                `/files/delete/${fileId}`
+            );
+            console.log("Delete response:", response);
+
+            setFiles((prevFiles) =>
+                prevFiles.filter((file) => file.id !== fileId)
+            );
+            setMessage("File deleted successfully");
+        } catch (error) {
+            console.error("Failed to delete file", error);
+            setMessage("Failed to delete file");
+        }
     };
 
     return (
@@ -70,12 +91,12 @@ const FileInfo = () => {
             {message && <p className="upload-message">{message}</p>}
             <div className="file-list">
                 {files.map((file) => (
-                    <div key={file.id} className="file-item">
+                    <div key={file.id || file.fileName} className="file-item">
                         <p className="file-name">{file.fileName}</p>
                         <p className="file-size">{file.fileSize}</p>
                         <button
                             className="delete-btn"
-                            onClick={() => handleDeleteFile(file.fileName)}
+                            onClick={() => handleDeleteFile(file.id)} // Utilisation de file.id ici
                         >
                             ❌
                         </button>

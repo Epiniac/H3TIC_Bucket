@@ -39,9 +39,9 @@ const UploadFile = () => {
 
             setMessage(response.data.message || "File uploaded successfully");
 
-            // Rediriger vers la page FileInfo en passant les détails du fichier
             navigate("/file-info", {
                 state: {
+                    id: response.data.fileId,
                     fileName: selectedFile.name,
                     fileSize: (selectedFile.size / 1024).toFixed(2) + " KB",
                 },

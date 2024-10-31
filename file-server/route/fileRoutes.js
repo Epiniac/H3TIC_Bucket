@@ -3,7 +3,8 @@ import multer from "multer";
 import {
     uploadFile,
     generateShareLink,
-    downloadFile
+    downloadFile,
+    deleteFile,
 } from "../controllers/fileController.js";
 import { auth } from "../middleware/auth.js";
 
@@ -29,5 +30,6 @@ const upload = multer({
 router.post("/upload", auth, upload.single("file"), uploadFile);
 router.post("/share/:fileId", auth, generateShareLink);
 router.get("/download/:token", downloadFile);
+router.delete("/delete/:fileId", auth, deleteFile);
 
 export default router;
