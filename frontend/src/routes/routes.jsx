@@ -20,17 +20,13 @@ export const routesConfig = [
         path: "/register",
         element: <SignUp />,
     },
-    // {
-    //   path: "/upload",
-    //   element: <ProtectedRoute element={<Upload />} />,
-    // },
     {
         path: "/upload",
-        element: <Upload />,
+        element: <ProtectedRoute element={<Upload />} />,
     },
     {
         path: "/file-info",
-        element: <FileInfo />,
+        element: <ProtectedRoute element={<FileInfo />} />,
     },
     {
         path: "/hello",

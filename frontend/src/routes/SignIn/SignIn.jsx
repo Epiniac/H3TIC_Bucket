@@ -17,7 +17,7 @@ function Login() {
         password,
       });
       setToken(response.data.token);
-      navigate("/hello");
+      navigate("/upload");
     } catch (error) {
       setMessage(error.response?.data?.message || "Error logging in");
     }
