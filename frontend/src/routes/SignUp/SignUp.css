@@ -1,0 +1,22 @@
+.article {
+    height: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-direction: column;
+    margin: 15% 40%;  
+    background-color: aliceblue; 
+    border-radius: 10px;
+    padding: 20px 0;
+}
+
+label {
+    font-size: larger;
+}
+
+.signtitle{
+    text-align: center;
+    font-size: 70px;
+    color: white;
+}

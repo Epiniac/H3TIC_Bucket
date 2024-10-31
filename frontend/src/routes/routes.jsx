@@ -1,13 +1,18 @@
-// src/routes/routes.js
-import Login from "../routes/SignIn/SignIn";
+import { createBrowserRouter } from "react-router-dom";
 import SignUp from "../routes/SignUp/SignUp";
-import Hello from "../routes/Hello/Hello";
-import ProtectedRoute from "../components/ProtectedRoute"; // Import de ProtectedRoute
+import SignIn from "../routes/SignIn/SignIn";
+import Home from "../routes/Home/Home";
+import Hello from "./Hello/Hello.jsx";
+import ProtectedRoute from "../components/ProtectedRoute.jsx";
 
 export const routesConfig = [
   {
+    path: "/",
+    element: <Home />
+  },
+  {
     path: "/login",
-    element: <Login />,
+    element: <SignIn />,
   },
   {
     path: "/register",
@@ -15,6 +20,6 @@ export const routesConfig = [
   },
   {
     path: "/hello",
-    element: <ProtectedRoute element={<Hello />} />, // Route protégée
+    element: <ProtectedRoute element={<Hello />} />,
   },
 ];
