@@ -2,6 +2,7 @@ import express from "express";
 import fileRoutes from "./route/fileRoutes.js";
 import authRoutes from "./route/authRoutes.js";
 import fs from "fs";
+import cors from "cors"
 import path from "path";
 import "dotenv/config";
 
@@ -14,6 +15,11 @@ if (!fs.existsSync(uploadDir)) {
 } else {
     console.log("folder upload is here already !");
 }
+
+app.use(cors({
+    origin: "http://localhost:6600",
+    credentials: true
+}));
 
 app.use(express.json());
 
