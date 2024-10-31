@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getToken, removeToken } from "../../utils/Auth";
+import LogoutButton from "../../components/LogoutButton";
 
 function Hello() {
   const [message, setMessage] = useState("");
@@ -36,6 +37,7 @@ function Hello() {
     <div>
       <h2>teststestst</h2>
       <h2>{message}</h2>
+      <LogoutButton />
     </div>
   );
 }

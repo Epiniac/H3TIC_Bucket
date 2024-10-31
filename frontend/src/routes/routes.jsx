@@ -1,9 +1,8 @@
-import { createBrowserRouter } from "react-router-dom";
-
+// src/routes/routes.js
 import Login from "../routes/SignIn/SignIn";
 import SignUp from "../routes/SignUp/SignUp";
-import Hello from "./Hello/Hello.jsx";
-import ProtectedRoute from "../components/ProtectedRoute.jsx";
+import Hello from "../routes/Hello/Hello";
+import ProtectedRoute from "../components/ProtectedRoute"; // Import de ProtectedRoute
 
 export const routesConfig = [
   {
@@ -16,7 +15,6 @@ export const routesConfig = [
   },
   {
     path: "/hello",
-    element: <ProtectedRoute element={<Hello />} />,
+    element: <ProtectedRoute element={<Hello />} />, // Route protégée
   },
 ];
-export const router = createBrowserRouter(routesConfig);
