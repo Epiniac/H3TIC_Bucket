@@ -39,7 +39,7 @@ function Register() {
   return (
     <div  className="theme">
       <div>
-        <h2>REGISTER</h2>
+        <h1>REGISTER</h1>
         <form onSubmit={handleSubmit}>
           <div className="input">
           <label>Username:</label>

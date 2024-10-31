@@ -26,7 +26,7 @@ function Login() {
   return (
     <div className="theme">
       <div>
-        <h2>LOGIN</h2>
+        <h1>LOGIN</h1>
         <form onSubmit={handleSubmit}>
           <div className="input">
           <label>Username:</label>

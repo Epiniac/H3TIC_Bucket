@@ -3,10 +3,13 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin: 10% 30%;
+    margin: 10% auto; 
+    padding: 20px;
     border-radius: 10px;
-    border : solid;   
-    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+    border: solid;
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, 0.2);
+    max-width: 600px;
+    width: 40%;
 }
 
 .input {
@@ -20,3 +23,29 @@
     color: red;
 }
 
+
+@media (max-width: 768px) {
+    .theme {
+        margin: 5% 5%;
+        padding: 15px; 
+    }
+
+    .input {
+        margin-bottom: 5%; 
+    }
+
+    h2 {
+        font-size: 1.9em;
+    }
+
+    button {
+        width: 100%; 
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.4em; 
+    }
+}
