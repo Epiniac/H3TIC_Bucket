@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-
 import SignUp from "../routes/SignUp/SignUp";
 import SignIn from "../routes/SignIn/SignIn";
 import Home from "../routes/Home/Home";
@@ -24,4 +23,3 @@ export const routesConfig = [
     element: <ProtectedRoute element={<Hello />} />,
   },
 ];
-export const router = createBrowserRouter(routesConfig);

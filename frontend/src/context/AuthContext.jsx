@@ -1,31 +1,30 @@
-// src/context/AuthContext.js
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { isAuthenticated, setToken, removeToken } from "../utils/Auth";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated());
+    const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated());
 
-  useEffect(() => {
-    setIsLoggedIn(isAuthenticated());
-  }, []);
+    useEffect(() => {
+        setIsLoggedIn(isAuthenticated());
+    }, []);
 
-  const login = (token) => {
-    setToken(token);
-    setIsLoggedIn(true);
-  };
+    const login = (token) => {
+        setToken(token);
+        setIsLoggedIn(true);
+    };
 
-  const logout = () => {
-    removeToken();
-    setIsLoggedIn(false);
-  };
+    const logout = () => {
+        removeToken();
+        setIsLoggedIn(false);
+    };
 
-  return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export default AuthContext;
