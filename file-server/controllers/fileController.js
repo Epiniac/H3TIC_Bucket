@@ -39,7 +39,7 @@ export const uploadFile = async (req, res) => {
 };
 
 export const downloadFile = async (req, res) => {
-    const { token } = req.params;
+    const token = decodeURIComponent(req.params.token);
 
     try {
         const [link] = await connection.query(
@@ -77,6 +77,7 @@ export const downloadFile = async (req, res) => {
 
 export const generateShareLink = async (req, res) => {
     const { fileId } = req.params;
+    const { linkName } = req.body; // Récupère le nom du lien depuis le frontend
 
     try {
         const [file] = await connection.query(
@@ -92,12 +93,15 @@ export const generateShareLink = async (req, res) => {
         const hashedToken = await bcrypt.hash(token, 10);
 
         await connection.query(
-            "INSERT INTO links (file_id, token, token_hash) VALUES (?, ?, ?)",
-            [fileId, token, hashedToken]
+            "INSERT INTO links (file_id, token, token_hash, link_name) VALUES (?, ?, ?, ?)",
+            [fileId, token, hashedToken, linkName]
         );
 
         res.status(200).json({
-            shareLink: `http://localhost:8800/files/download/${hashedToken}`,
+            shareLink: `http://localhost:8800/files/download/${encodeURIComponent(
+                hashedToken
+            )}`,
+            linkName,
         });
     } catch (error) {
         console.error(error.message);

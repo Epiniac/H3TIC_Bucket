@@ -8,6 +8,8 @@ const FileInfo = () => {
     const initialFile = location.state || {};
     const [files, setFiles] = useState(initialFile ? [initialFile] : []);
     const [message, setMessage] = useState("");
+    const [linkNames, setLinkNames] = useState({});
+    const [shareLinks, setShareLinks] = useState({});
 
     const uploadFile = async (file) => {
         const formData = new FormData();
@@ -17,9 +19,7 @@ const FileInfo = () => {
             const response = await axiosInstance.post(
                 "/files/upload",
                 formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                }
+                { headers: { "Content-Type": "multipart/form-data" } }
             );
 
             if (!response.data.fileId) {
@@ -29,7 +29,7 @@ const FileInfo = () => {
             }
 
             const uploadedFile = {
-                id: response.data.fileId, // Assurez-vous que fileId est présent ici
+                id: response.data.fileId,
                 fileName: file.name,
                 fileSize: (file.size / 1024).toFixed(2) + " KB",
             };
@@ -56,14 +56,8 @@ const FileInfo = () => {
             return;
         }
 
-        console.log("Attempting to delete file with ID:", fileId);
-
         try {
-            const response = await axiosInstance.delete(
-                `/files/delete/${fileId}`
-            );
-            console.log("Delete response:", response);
-
+            await axiosInstance.delete(`/files/delete/${fileId}`);
             setFiles((prevFiles) =>
                 prevFiles.filter((file) => file.id !== fileId)
             );
@@ -71,6 +65,29 @@ const FileInfo = () => {
         } catch (error) {
             console.error("Failed to delete file", error);
             setMessage("Failed to delete file");
+        }
+    };
+
+    const generateShareLink = async (fileId) => {
+        if (!linkNames[fileId]) {
+            setMessage("Please enter a name for the link.");
+            return;
+        }
+
+        try {
+            const response = await axiosInstance.post(
+                `/files/share/${fileId}`,
+                { linkName: linkNames[fileId] }
+            );
+
+            setShareLinks((prevLinks) => ({
+                ...prevLinks,
+                [fileId]: response.data.shareLink,
+            }));
+            setMessage("Link generated successfully");
+        } catch (error) {
+            console.error("Failed to generate share link", error);
+            setMessage("Failed to generate share link");
         }
     };
 
@@ -91,15 +108,54 @@ const FileInfo = () => {
             {message && <p className="upload-message">{message}</p>}
             <div className="file-list">
                 {files.map((file) => (
-                    <div key={file.id || file.fileName} className="file-item">
-                        <p className="file-name">{file.fileName}</p>
-                        <p className="file-size">{file.fileSize}</p>
-                        <button
-                            className="delete-btn"
-                            onClick={() => handleDeleteFile(file.id)} // Utilisation de file.id ici
-                        >
-                            ❌
-                        </button>
+                    <div key={file.id} className="file-item">
+                        <div className="file-details">
+                            <p className="file-name">
+                                <strong>File Name:</strong> {file.fileName}
+                            </p>
+                            <p className="file-size">
+                                <strong>Size:</strong> {file.fileSize}
+                            </p>
+                            <button
+                                className="delete-btn"
+                                onClick={() => handleDeleteFile(file.id)}
+                            >
+                                ❌ Delete
+                            </button>
+                        </div>
+                        <div className="link-generation">
+                            <input
+                                type="text"
+                                className="link-name-input"
+                                placeholder="Enter link name"
+                                value={linkNames[file.id] || ""}
+                                onChange={(e) =>
+                                    setLinkNames((prev) => ({
+                                        ...prev,
+                                        [file.id]: e.target.value,
+                                    }))
+                                }
+                            />
+                            <button
+                                className="generate-link-btn"
+                                onClick={() => generateShareLink(file.id)}
+                            >
+                                Generate Link
+                            </button>
+                        </div>
+                        {shareLinks[file.id] && (
+                            <div className="share-link-result">
+                                <strong>Download Link:</strong>{" "}
+                                <a
+                                    href={shareLinks[file.id]}
+                                    download
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {shareLinks[file.id]}
+                                </a>
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
