@@ -53,6 +53,7 @@ function Register() {
           <button type="submit" disabled={isLoading}>
             {isLoading ? "Registering..." : "Register"}
           </button>
+          <p>Already have an account? Log-in <a href="/login">here</a></p>
         </form>
         {message && <p>{message}</p>}
       </div>

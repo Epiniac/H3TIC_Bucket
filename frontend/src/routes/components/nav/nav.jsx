@@ -11,7 +11,7 @@ export const Navbar = () => {
         <nav className="navigation">
           <ul>
             <li>
-              <a className="button" href="/connexion">SIGN IN</a>
+              <a className="button" href="/login">SIGN IN</a>
             </li>
             <li>
               <a className="button" href="/register">SIGN UP</a>
