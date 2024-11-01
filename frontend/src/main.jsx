@@ -7,15 +7,19 @@ import { AuthProvider } from "./context/AuthContext";
 const root = document.getElementById("root");
 
 createRoot(root).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <Router>
-        <Routes>
-          {routesConfig.map((route, index) => (
-            <Route key={index} path={route.path} element={route.element} />
-          ))}
-        </Routes>
-      </Router>
-    </AuthProvider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <AuthProvider>
+            <Router>
+                <Routes>
+                    {routesConfig.map((route, index) => (
+                        <Route
+                            key={index}
+                            path={route.path}
+                            element={route.element}
+                        />
+                    ))}
+                </Routes>
+            </Router>
+        </AuthProvider>
+    </React.StrictMode>
 );

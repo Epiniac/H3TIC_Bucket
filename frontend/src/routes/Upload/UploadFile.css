@@ -1,0 +1,103 @@
+/* Centrage vertical et horizontal pour le conteneur principal */
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    position: relative; /* Permet le positionnement absolu du bouton logout */
+    background-color: #1a1a1a; /* Fond de la page en noir */
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+.upload-form {
+    position: relative;
+}
+
+/* Bouton d'upload en forme de cercle */
+.upload-button {
+    position: relative;
+    width: 200px; /* Taille augmentée */
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: white;
+    background-color: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: hidden;
+    border: 4px solid white; /* Bordure blanche */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.upload-button:hover {
+    transform: scale(1.1);
+    background-color: #333; /* Fond gris foncé au survol */
+}
+
+.upload-button .button-text {
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.3s;
+}
+
+.upload-icon {
+    position: absolute;
+    font-size: 3rem;
+    opacity: 0;
+    color: white;
+    transition: opacity 0.3s;
+}
+
+.upload-button:hover .button-text {
+    opacity: 0;
+}
+
+.upload-button:hover .upload-icon {
+    opacity: 1;
+}
+
+/* Masque l'input file */
+.upload-button input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.upload-message {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+}
+
+/* Bouton de déconnexion placé en haut à droite */
+.logout-button-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.logout-button {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: white;
+    color: black;
+}

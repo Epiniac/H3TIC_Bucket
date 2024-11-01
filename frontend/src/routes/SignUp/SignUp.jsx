@@ -29,7 +29,7 @@ function Register() {
       });
       setMessage(response.data.message);
       setIsLoading(false);
-      navigate("/hello");
+      navigate("/login");
     } catch (error) {
       setMessage(error.response?.data?.message || "Error registering user");
       setIsLoading(false);
