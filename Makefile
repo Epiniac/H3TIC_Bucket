@@ -1,6 +1,6 @@
 build:
 	docker compose up --build
-re:
+start:
 	docker compose up
 stop:
 	docker compose down
