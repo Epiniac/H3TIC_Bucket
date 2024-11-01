@@ -1,16 +1,28 @@
+body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
 .file-info-container {
     padding: 20px;
     max-width: 600px;
-    margin: 0 auto;
-    background-color: #f9f9f9;
+    margin: 50px auto;
+    background-color: #f0f0f0;
+    color: #333333;
     border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .file-info-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    color: #333333;
     margin-bottom: 20px;
 }
 
@@ -18,10 +30,15 @@
     display: inline-block;
     cursor: pointer;
     font-size: 24px;
-    color: #4a90e2;
-    border: 2px solid #4a90e2;
+    color: #333333;
+    border: 2px solid #333333;
     padding: 5px 15px;
     border-radius: 50px;
+    transition: background-color 0.3s ease;
+}
+
+.add-file-button:hover {
+    background-color: #cccccc;
 }
 
 .file-list .file-item {
@@ -31,51 +48,58 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
 
-.file-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.link-generation {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.link-name-input {
-    flex: 1;
-    padding: 5px;
-    margin-right: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.generate-link-btn {
-    padding: 5px 10px;
-    background-color: #4a90e2;
+.generate-link-btn,
+.delete-btn {
+    padding: 8px 16px;
+    background-color: #333333;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
 }
 
-.generate-link-btn:hover {
-    background-color: #357abd;
-}
-
-.delete-btn {
-    background-color: transparent;
-    color: #d9534f;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
+.generate-link-btn:hover,
+.delete-btn:hover {
+    background-color: #555555;
 }
 
 .share-link-result {
     margin-top: 10px;
     font-size: 14px;
     color: #333;
+    text-align: center;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.link-text {
+    color: #4a90e2;
+    text-decoration: underline;
+    display: inline-block;
+    max-width: 300px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.logout-button {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: white;
+    color: black;
 }

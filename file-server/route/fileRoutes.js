@@ -5,6 +5,7 @@ import {
     generateShareLink,
     downloadFile,
     deleteFile,
+    getUserFiles,
 } from "../controllers/fileController.js";
 import { auth } from "../middleware/auth.js";
 
@@ -31,5 +32,6 @@ router.post("/upload", auth, upload.single("file"), uploadFile);
 router.post("/share/:fileId", auth, generateShareLink);
 router.get("/download/:token", downloadFile);
 router.delete("/delete/:fileId", auth, deleteFile);
+router.get("/user-files", auth, getUserFiles);
 
 export default router;

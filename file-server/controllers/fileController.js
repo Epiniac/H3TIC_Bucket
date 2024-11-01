@@ -19,18 +19,19 @@ export const uploadFile = async (req, res) => {
     const userId = req.userId;
 
     try {
-        // Insertion du fichier dans la base de données et récupération de l'ID inséré
         const [result] = await connection.query(
-            "INSERT INTO files (filename, size, user_id) VALUES (?, ?, ?)",
-            [filename, size, userId]
+            "INSERT INTO files (filename, originalname, size, user_id) VALUES (?, ?, ?, ?)",
+            [filename, originalname, size, userId]
         );
 
-        const fileId = result.insertId; // Récupère l'ID du fichier inséré
+        const fileId = result.insertId;
 
         res.status(201).json({
             message: "File uploaded successfully",
-            fileId, // Ajout de l'ID dans la réponse
+            fileId,
+            originalname,
             filename,
+            size,
         });
     } catch (error) {
         console.error("Erreur lors de l'upload du fichier :", error.message);
@@ -148,6 +149,25 @@ export const deleteFile = async (req, res) => {
     } catch (error) {
         console.error(
             "Erreur lors de la suppression du fichier :",
+            error.message
+        );
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const getUserFiles = async (req, res) => {
+    const userId = req.userId;
+
+    try {
+        const [files] = await connection.query(
+            "SELECT id, filename, originalname, size FROM files WHERE user_id = ?",
+            [userId]
+        );
+
+        res.status(200).json({ files });
+    } catch (error) {
+        console.error(
+            "Erreur lors de la récupération des fichiers :",
             error.message
         );
         res.status(500).json({ error: error.message });

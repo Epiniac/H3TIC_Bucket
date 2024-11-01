@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
+import LogoutButton from "../../components/LogoutButton/LogoutButton";
 import "./FileInfo.css";
 
 const FileInfo = () => {
@@ -8,8 +9,26 @@ const FileInfo = () => {
     const initialFile = location.state || {};
     const [files, setFiles] = useState(initialFile ? [initialFile] : []);
     const [message, setMessage] = useState("");
-    const [linkNames, setLinkNames] = useState({});
     const [shareLinks, setShareLinks] = useState({});
+
+    useEffect(() => {
+        const fetchFiles = async () => {
+            try {
+                const response = await axiosInstance.get("/files/user-files");
+                const fetchedFiles = response.data.files.map((file) => ({
+                    id: file.id,
+                    fileName: file.filename, // Assurez-vous d'utiliser les champs retournés par le backend
+                    fileSize: (file.size / 1024).toFixed(2) + " KB", // Convertir en Ko si nécessaire
+                }));
+                setFiles(fetchedFiles);
+            } catch (error) {
+                setMessage("Failed to fetch files");
+                console.error("Failed to fetch files", error);
+            }
+        };
+
+        fetchFiles();
+    }, []);
 
     const uploadFile = async (file) => {
         const formData = new FormData();
@@ -22,15 +41,9 @@ const FileInfo = () => {
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
 
-            if (!response.data.fileId) {
-                console.error("No fileId received from backend");
-                setMessage("Upload successful, but fileId missing.");
-                return;
-            }
-
             const uploadedFile = {
                 id: response.data.fileId,
-                fileName: file.name,
+                fileName: response.data.filename,
                 fileSize: (file.size / 1024).toFixed(2) + " KB",
             };
 
@@ -69,17 +82,8 @@ const FileInfo = () => {
     };
 
     const generateShareLink = async (fileId) => {
-        if (!linkNames[fileId]) {
-            setMessage("Please enter a name for the link.");
-            return;
-        }
-
         try {
-            const response = await axiosInstance.post(
-                `/files/share/${fileId}`,
-                { linkName: linkNames[fileId] }
-            );
-
+            const response = await axiosInstance.post(`/files/share/${fileId}`);
             setShareLinks((prevLinks) => ({
                 ...prevLinks,
                 [fileId]: response.data.shareLink,
@@ -93,6 +97,9 @@ const FileInfo = () => {
 
     return (
         <div className="file-info-container">
+            <div className="logout-button-container">
+                <LogoutButton />
+            </div>
             <div className="file-info-header">
                 <p>{files.length} file(s)</p>
                 <label htmlFor="add-file" className="add-file-button">
@@ -123,26 +130,12 @@ const FileInfo = () => {
                                 ❌ Delete
                             </button>
                         </div>
-                        <div className="link-generation">
-                            <input
-                                type="text"
-                                className="link-name-input"
-                                placeholder="Enter link name"
-                                value={linkNames[file.id] || ""}
-                                onChange={(e) =>
-                                    setLinkNames((prev) => ({
-                                        ...prev,
-                                        [file.id]: e.target.value,
-                                    }))
-                                }
-                            />
-                            <button
-                                className="generate-link-btn"
-                                onClick={() => generateShareLink(file.id)}
-                            >
-                                Generate Link
-                            </button>
-                        </div>
+                        <button
+                            className="generate-link-btn"
+                            onClick={() => generateShareLink(file.id)}
+                        >
+                            Generate Link
+                        </button>
                         {shareLinks[file.id] && (
                             <div className="share-link-result">
                                 <strong>Download Link:</strong>{" "}
@@ -151,6 +144,7 @@ const FileInfo = () => {
                                     download
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    className="link-text"
                                 >
                                     {shareLinks[file.id]}
                                 </a>

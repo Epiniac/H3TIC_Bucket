@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
+import LogoutButton from "../../components/LogoutButton/LogoutButton";
 import "./UploadFile.css";
 
 const UploadFile = () => {
@@ -53,9 +54,13 @@ const UploadFile = () => {
 
     return (
         <div className="upload-container">
+            <div className="logout-button-container">
+                <LogoutButton />
+            </div>
             <form className="upload-form">
                 <label htmlFor="file-upload" className="upload-button">
-                    <span>Démarrer</span>
+                    <span className="button-text">Démarrer</span>
+                    <span className="upload-icon">⬆</span>
                     <input
                         type="file"
                         id="file-upload"
