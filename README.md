@@ -1,5 +1,9 @@
 # How to Run
 
+- **make**
+
+  Lance l'application H3TIC BUCKET.
+
 - **make build:**
 
   ```sh
@@ -23,6 +27,22 @@
   ```
 
   Arrête et supprime les conteneurs créés avec _docker compose up_. Les volumes et réseaux persistent, sauf si explicitement supprimés.
+
+- **make mariadb:**
+
+  ```sh
+  docker exec -it bucket-db-1 mariadb -u root -p
+  ```
+
+  Après avoir tapé cette commande, on vous demandera le mot de passe pour l'utilisateur root, et une fois entré correctement, vous serez en mesure d'exécuter des commandes SQL dans cette instance MariaDB en utilisant l'interface en ligne de commande.
+
+- **make bash:**
+
+  ```sh
+  docker exec -it bucket-backend-1 /bin/bash
+  ```
+
+  Accéder à un conteneur Docker pour ouvrir un shell interactif dans un environnement de type Bash
 
 - **make clean:**
   ```sh
