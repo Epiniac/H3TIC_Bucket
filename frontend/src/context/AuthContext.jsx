@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = () => {
+        console.log("User is logging out...");
         removeToken();
         setIsLoggedIn(false);
     };
