@@ -6,8 +6,7 @@ import "./FileInfo.css";
 
 const FileInfo = () => {
     const location = useLocation();
-    const initialFile = location.state || {};
-    const [files, setFiles] = useState(initialFile ? [initialFile] : []);
+    const [files, setFiles] = useState([]);
     const [message, setMessage] = useState("");
     const [shareLinks, setShareLinks] = useState({});
 
@@ -15,15 +14,15 @@ const FileInfo = () => {
         const fetchFiles = async () => {
             try {
                 const response = await axiosInstance.get("/files/user-files");
-                const fetchedFiles = response.data.files.map((file) => ({
-                    id: file.id,
-                    fileName: file.filename, // Assurez-vous d'utiliser les champs retournés par le backend
-                    fileSize: (file.size / 1024).toFixed(2) + " KB", // Convertir en Ko si nécessaire
+                const formattedFiles = response.data.files.map((file) => ({
+                    ...file,
+                    fileName: file.filename,
+                    fileSize: (file.size / 1024).toFixed(2) + " KB",
                 }));
-                setFiles(fetchedFiles);
+                setFiles(formattedFiles);
             } catch (error) {
-                setMessage("Failed to fetch files");
-                console.error("Failed to fetch files", error);
+                setMessage("Échec de la récupération des fichiers");
+                console.error("Échec de la récupération des fichiers", error);
             }
         };
 
@@ -48,10 +47,10 @@ const FileInfo = () => {
             };
 
             setFiles((prevFiles) => [...prevFiles, uploadedFile]);
-            setMessage("File uploaded successfully");
+            setMessage("Fichier téléversé avec succès");
         } catch (error) {
-            setMessage("Failed to upload file");
-            console.error("Failed to upload file", error);
+            setMessage("Échec du téléversement du fichier");
+            console.error("Échec du téléversement du fichier", error);
         }
     };
 
@@ -64,8 +63,8 @@ const FileInfo = () => {
 
     const handleDeleteFile = async (fileId) => {
         if (!fileId) {
-            console.error("No fileId provided for deletion");
-            setMessage("Failed to delete file: missing fileId");
+            console.error("Aucun fileId fourni pour la suppression");
+            setMessage("Échec de la suppression du fichier : fileId manquant");
             return;
         }
 
@@ -74,10 +73,10 @@ const FileInfo = () => {
             setFiles((prevFiles) =>
                 prevFiles.filter((file) => file.id !== fileId)
             );
-            setMessage("File deleted successfully");
+            setMessage("Fichier supprimé avec succès");
         } catch (error) {
-            console.error("Failed to delete file", error);
-            setMessage("Failed to delete file");
+            console.error("Échec de la suppression du fichier", error);
+            setMessage("Échec de la suppression du fichier");
         }
     };
 
@@ -88,10 +87,10 @@ const FileInfo = () => {
                 ...prevLinks,
                 [fileId]: response.data.shareLink,
             }));
-            setMessage("Link generated successfully");
+            setMessage("Lien généré avec succès");
         } catch (error) {
-            console.error("Failed to generate share link", error);
-            setMessage("Failed to generate share link");
+            console.error("Échec de la génération du lien de partage", error);
+            setMessage("Échec de la génération du lien de partage");
         }
     };
 
@@ -101,7 +100,7 @@ const FileInfo = () => {
                 <LogoutButton />
             </div>
             <div className="file-info-header">
-                <p>{files.length} file(s)</p>
+                <p>{files.length} fichier(s)</p>
                 <label htmlFor="add-file" className="add-file-button">
                     <span>+</span>
                     <input
@@ -118,27 +117,28 @@ const FileInfo = () => {
                     <div key={file.id} className="file-item">
                         <div className="file-details">
                             <p className="file-name">
-                                <strong>File Name:</strong> {file.fileName}
+                                <strong>Nom du fichier :</strong>{" "}
+                                {file.fileName}
                             </p>
                             <p className="file-size">
-                                <strong>Size:</strong> {file.fileSize}
+                                <strong>Taille :</strong> {file.fileSize}
                             </p>
                             <button
                                 className="delete-btn"
                                 onClick={() => handleDeleteFile(file.id)}
                             >
-                                ❌ Delete
+                                ❌ Supprimer
                             </button>
                         </div>
                         <button
                             className="generate-link-btn"
                             onClick={() => generateShareLink(file.id)}
                         >
-                            Generate Link
+                            Générer un lien
                         </button>
                         {shareLinks[file.id] && (
                             <div className="share-link-result">
-                                <strong>Download Link:</strong>{" "}
+                                <strong>Lien de téléchargement :</strong>{" "}
                                 <a
                                     href={shareLinks[file.id]}
                                     download

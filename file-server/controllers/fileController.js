@@ -155,21 +155,23 @@ export const deleteFile = async (req, res) => {
     }
 };
 
+// Fichier backend pour obtenir les fichiers d'un utilisateur spécifique
 export const getUserFiles = async (req, res) => {
-    const userId = req.userId;
+    const userId = req.userId; // Assurez-vous que `userId` provient de l'authentification JWT
 
     try {
         const [files] = await connection.query(
-            "SELECT id, filename, originalname, size FROM files WHERE user_id = ?",
+            "SELECT id, filename, size FROM files WHERE user_id = ?",
             [userId]
         );
-
         res.status(200).json({ files });
     } catch (error) {
         console.error(
             "Erreur lors de la récupération des fichiers :",
             error.message
         );
-        res.status(500).json({ error: error.message });
+        res.status(500).json({
+            message: "Échec de la récupération des fichiers",
+        });
     }
 };
